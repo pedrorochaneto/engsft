@@ -1,6 +1,6 @@
-================================================================================
+
                       🐳 DOCKER HELLO WORLD - GUIA RÁPIDO
-================================================================================
+
 
 Este projeto demonstra passo a passo como criar uma imagem Docker personalizada
 baseada em Alpine Linux e executar um container que imprime "Hello World".
