@@ -1,92 +1,102 @@
-🐳 Docker Hello World
+================================================================================
+                      🐳 DOCKER HELLO WORLD - GUIA RÁPIDO
+================================================================================
 
-Este projeto demonstra como criar e executar um container Docker que imprime Hello World no terminal.
+Este projeto demonstra passo a passo como criar uma imagem Docker personalizada
+baseada em Alpine Linux e executar um container que imprime "Hello World".
 
-📋 Pré-requisitos
+--------------------------------------------------------------------------------
+[1] PRÉ-REQUISITOS
+--------------------------------------------------------------------------------
 
-Antes de começar, tenha instalado:
+  * Docker instalado e em execução no sistema.
+  * Git (opcional, para versionamento).
 
-Docker
-Git (opcional)
+  Para verificar a instalação do Docker:
+    $ docker --version
 
-Para verificar se o Docker está instalado:
+--------------------------------------------------------------------------------
+[2] ESTRUTURA DO PROJETO
+--------------------------------------------------------------------------------
 
-docker --version
+  Crie o diretório de trabalho e acesse a pasta:
+    $ mkdir docker-hello-world
+    $ cd docker-hello-world
 
-📁 Estrutura do projeto
+  Estrutura de arquivos:
+    docker-hello-world/
+    └── Dockerfile
 
-Crie uma pasta para o projeto:
+--------------------------------------------------------------------------------
+[3] CRIANDO O DOCKERFILE
+--------------------------------------------------------------------------------
 
-mkdir docker-hello-world
-cd docker-hello-world
+  Crie um arquivo chamado "Dockerfile" com o seguinte conteúdo:
 
+  ----------------------------------------------------------------------------
+  FROM alpine:latest
+  CMD ["echo", "Hello World"]
+  ----------------------------------------------------------------------------
 
-A estrutura ficará assim:
+  Entendendo as instruções:
+    • FROM alpine:latest  -> Define o Alpine Linux como imagem base (~5MB).
+    • CMD [...]           -> Especifica o comando padrão executado ao iniciar.
 
-docker-hello-world/
-└── Dockerfile
+--------------------------------------------------------------------------------
+[4] CONSTRUINDO A IMAGEM (BUILD)
+--------------------------------------------------------------------------------
 
-📝 Criando o Dockerfile
+  Execute o comando de build dentro da pasta do projeto:
+    $ docker build -t meu-hello-world .
 
-Crie um arquivo chamado Dockerfile:
+  Nota: O ponto final (.) indica o diretório de contexto atual.
+        Utilizamos "meu-hello-world" para evitar conflito com a imagem oficial.
 
-FROM alpine:latest
+  Para conferir a imagem recém-criada na listagem local:
+    $ docker images
 
-CMD ["echo", "Hello World"]
+--------------------------------------------------------------------------------
+[5] EXECUTANDO O CONTAINER (RUN)
+--------------------------------------------------------------------------------
 
-O que esse Dockerfile faz?
-FROM alpine:latest — utiliza uma imagem Linux Alpine como base.
-CMD ["echo", "Hello World"] — executa o comando echo quando o container iniciar.
-🔨 Criando a imagem
+  Inicie o container com descarte automático após a execução:
+    $ docker run --rm meu-hello-world
 
-Execute o comando abaixo dentro da pasta do projeto:
+  * A flag "--rm" remove o container assim que a execução do processo termina.
 
-docker build -t hello-world .
+  Saída no terminal:
+  ============================================================================
+  Hello World
+  ============================================================================
 
+--------------------------------------------------------------------------------
+[6] LIMPEZA E MANUTENÇÃO (CLEANUP)
+--------------------------------------------------------------------------------
 
-O parâmetro -t define o nome da imagem como hello-world.
+  Caso queira remover a imagem criada e liberar espaço em disco:
+    $ docker rmi meu-hello-world
 
-Para verificar se a imagem foi criada:
+--------------------------------------------------------------------------------
+[7] RESUMO DO FLUXO DOCKER
+--------------------------------------------------------------------------------
 
-docker images
+      +------------+          +-------------+          +---------------+
+      | Dockerfile | =(build)>|   Imagem    | =(run)==>|   Container   |
+      +------------+          +-------------+          +---------------+
+                                                              |
+                                                    (imprime saída e finaliza)
 
-▶️ Executando o container
+  TABELA RÁPIDA DE COMANDOS:
+  ----------------------------------------------------------------------------
+  Comando                       | Descrição
+  ------------------------------+---------------------------------------------
+  docker build -t <nome> .      | Constrói a imagem a partir do Dockerfile
+  docker images                 | Lista todas as imagens baixadas/criadas
+  docker run --rm <nome>        | Instancia e roda o container com auto-delete
+  docker ps -a                  | Lista todos os containers (ativos e parados)
+  docker rmi <nome>             | Remove a imagem local informada
+  ----------------------------------------------------------------------------
 
-Agora execute:
-
-docker run --rm hello-world
-
-
-A saída esperada será:
-
-Hello World
-
-
-O parâmetro --rm faz com que o container seja removido automaticamente após a execução.
-
-🧹 Limpando a imagem
-
-Caso queira remover a imagem criada:
-
-docker rmi hello-world
-
-🚀 Resumo
-
-Os principais comandos são:
-
-# Criar a imagem
-docker build -t hello-world .
-
-# Executar o container
-docker run --rm hello-world
-
-
-Resultado:
-
-Hello World
-
-📌 Conclusão
-
-Você criou uma imagem Docker baseada em Alpine e executou um container que imprime Hello World no terminal. Esse é um dos exemplos mais simples para entender o ciclo básico do Docker:
-
-Dockerfile → Build → Image → Container → Execução
+================================================================================
+Projeto pronto para ser versionado no Git!
+================================================================================
