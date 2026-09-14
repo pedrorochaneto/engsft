@@ -1,102 +1,120 @@
+# 🐳 Docker Hello World
 
-                      🐳 DOCKER HELLO WORLD - GUIA RÁPIDO
+Guia prático para criar e executar seu primeiro container Docker personalizado.
 
+---
 
-Este projeto demonstra passo a passo como criar uma imagem Docker personalizada
-baseada em Alpine Linux e executar um container que imprime "Hello World".
+### 📋 Pré-requisitos
 
---------------------------------------------------------------------------------
-[1] PRÉ-REQUISITOS
---------------------------------------------------------------------------------
+* **Docker** instalado no sistema.
+* **Git** (opcional).
 
-  * Docker instalado e em execução no sistema.
-  * Git (opcional, para versionamento).
+Para verificar se a instalação está correta:
 
-  Para verificar a instalação do Docker:
-    $ docker --version
+```bash
+docker --version
 
---------------------------------------------------------------------------------
-[2] ESTRUTURA DO PROJETO
---------------------------------------------------------------------------------
+```
 
-  Crie o diretório de trabalho e acesse a pasta:
-    $ mkdir docker-hello-world
-    $ cd docker-hello-world
+---
 
-  Estrutura de arquivos:
-    docker-hello-world/
-    └── Dockerfile
+### 📁 Estrutura do Projeto
 
---------------------------------------------------------------------------------
-[3] CRIANDO O DOCKERFILE
---------------------------------------------------------------------------------
+Crie a pasta de trabalho e acesse o diretório:
 
-  Crie um arquivo chamado "Dockerfile" com o seguinte conteúdo:
+```bash
+mkdir docker-hello-world
+cd docker-hello-world
 
-  ----------------------------------------------------------------------------
-  FROM alpine:latest
-  CMD ["echo", "Hello World"]
-  ----------------------------------------------------------------------------
+```
 
-  Entendendo as instruções:
-    • FROM alpine:latest  -> Define o Alpine Linux como imagem base (~5MB).
-    • CMD [...]           -> Especifica o comando padrão executado ao iniciar.
+Estrutura final esperada:
 
---------------------------------------------------------------------------------
-[4] CONSTRUINDO A IMAGEM (BUILD)
---------------------------------------------------------------------------------
+```text
+docker-hello-world/
+└── Dockerfile
 
-  Execute o comando de build dentro da pasta do projeto:
-    $ docker build -t meu-hello-world .
+```
 
-  Nota: O ponto final (.) indica o diretório de contexto atual.
-        Utilizamos "meu-hello-world" para evitar conflito com a imagem oficial.
+---
 
-  Para conferir a imagem recém-criada na listagem local:
-    $ docker images
+### 📝 Criando o Dockerfile
 
---------------------------------------------------------------------------------
-[5] EXECUTANDO O CONTAINER (RUN)
---------------------------------------------------------------------------------
+Crie um arquivo com o nome exato `Dockerfile` contendo o seguinte conteúdo:
 
-  Inicie o container com descarte automático após a execução:
-    $ docker run --rm meu-hello-world
+```dockerfile
+FROM alpine:latest
 
-  * A flag "--rm" remove o container assim que a execução do processo termina.
+CMD ["echo", "Hello World"]
 
-  Saída no terminal:
-  ============================================================================
-  Hello World
-  ============================================================================
+```
 
---------------------------------------------------------------------------------
-[6] LIMPEZA E MANUTENÇÃO (CLEANUP)
---------------------------------------------------------------------------------
+* `FROM alpine:latest`: define uma distribuição Linux ultraleve (~5 MB) como imagem base.
+* `CMD ["echo", "Hello World"]`: define o comando executado por padrão ao iniciar o container.
 
-  Caso queira remover a imagem criada e liberar espaço em disco:
-    $ docker rmi meu-hello-world
+---
 
---------------------------------------------------------------------------------
-[7] RESUMO DO FLUXO DOCKER
---------------------------------------------------------------------------------
+### 🔨 Construindo a Imagem
 
-      +------------+          +-------------+          +---------------+
-      | Dockerfile | =(build)>|   Imagem    | =(run)==>|   Container   |
-      +------------+          +-------------+          +---------------+
-                                                              |
-                                                    (imprime saída e finaliza)
+Gere a imagem local a partir do diretório atual (o ponto final indica o diretório de contexto):
 
-  TABELA RÁPIDA DE COMANDOS:
-  ----------------------------------------------------------------------------
-  Comando                       | Descrição
-  ------------------------------+---------------------------------------------
-  docker build -t <nome> .      | Constrói a imagem a partir do Dockerfile
-  docker images                 | Lista todas as imagens baixadas/criadas
-  docker run --rm <nome>        | Instancia e roda o container com auto-delete
-  docker ps -a                  | Lista todos os containers (ativos e parados)
-  docker rmi <nome>             | Remove a imagem local informada
-  ----------------------------------------------------------------------------
+```bash
+docker build -t meu-hello-world .
 
-================================================================================
-Projeto pronto para ser versionado no Git!
-================================================================================
+```
+
+> **Dica:** O nome `meu-hello-world` evita conflito com a imagem oficial `hello-world` do Docker Hub.
+
+Para confirmar se a imagem foi gerada:
+
+```bash
+docker images
+
+```
+
+---
+
+### ▶️ Executando o Container
+
+Inicie o container para visualizar a saída:
+
+```bash
+docker run --rm meu-hello-world
+
+```
+
+* A flag `--rm` apaga o container da memória automaticamente logo após o término da execução.
+
+**Saída esperada:**
+
+```text
+Hello World
+
+```
+
+---
+
+### 🧹 Limpeza do Ambiente
+
+Para deletar a imagem criada e liberar espaço em disco:
+
+```bash
+docker rmi meu-hello-world
+
+```
+
+---
+
+### 🚀 Ciclo de Vida Resumido
+
+```text
+Dockerfile ──(build)──> Imagem ──(run)──> Container ──(exit/rm)──> Finalizado
+
+```
+
+| Comando | Descrição |
+| --- | --- |
+| `docker build -t <nome> .` | Constrói a imagem com base no Dockerfile |
+| `docker run --rm <nome>` | Cria, roda e remove o container temporário |
+| `docker images` | Lista todas as imagens locais |
+| `docker rmi <nome>` | Exclui a imagem do sistema |
