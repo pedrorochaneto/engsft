@@ -1,2 +1,1 @@
-# engsft
-curso a noite
+docker run --rm meu-hello-world
